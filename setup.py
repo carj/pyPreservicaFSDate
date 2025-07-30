@@ -21,7 +21,7 @@ if sys.argv[-1] == 'publish':
 # This call to setup() does all the work
 setup(
     name=PKG,
-    version="0.0.1",
+    version="0.0.3",
     description="Python module to add local file system dates to existing Preservica assets",
     long_description=README,
     long_description_content_type="text/markdown",

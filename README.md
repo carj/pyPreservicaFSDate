@@ -69,4 +69,4 @@ options:
 
 The dates will appear as a new metadata form within the Asset
 
-![Metadata Dates](dates.png)
+![Metadata Dates](https://github.com/carj/pyPreservicaFSDate/blob/main/dates.png?raw=true)
