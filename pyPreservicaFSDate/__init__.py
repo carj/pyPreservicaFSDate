@@ -10,6 +10,6 @@ licence:    Apache License 2.0
 
 __author__ = "James Carr (drjamescarr@gmail.com)"
 
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 
 __license__ = "Apache License Version 2.0"

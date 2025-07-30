@@ -34,6 +34,11 @@ To install pyPreservicaFSDate, simply run this simple command in your terminal o
 
 ## Usage
 
+pyPreservicaFSDate uses the pyPreservica python library for ingesting content. This means that pyPreservicaFSDate 
+can use the same authentication methods as pyPreservica for reading Preservica credentials. See: 
+https://pypreservica.readthedocs.io/en/latest/intro.html#authentication
+
+
 To run the module you need to specify a Preservica collection you wish to process and a local directory
 containing the original files:
 
