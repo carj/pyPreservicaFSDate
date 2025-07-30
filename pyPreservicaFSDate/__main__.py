@@ -165,7 +165,7 @@ def main():
         fixity_hash["SHA256"] = FileHash(hashlib.sha256)
         fixity_hash["SHA512"] = FileHash(hashlib.sha512)
         for a in filter(only_assets, entity.all_descendants(folder)):
-            print(f'\rSearching the filesystem for asset: {a.title}', end="")
+            print(f'Searching the filesystem for asset: {a.title}\r', end="")
             asset = entity.asset(a.reference)
             if FILE_DATES_SCHEMA_NS not in asset.metadata_namespaces():
                 algorithm, fixity_value = fixity(a, entity)
@@ -182,7 +182,7 @@ def main():
 
     if use_fixity is None:
         for a in filter(only_assets, entity.all_descendants(folder)):
-            print(f'\rSearching the filesystem for asset: {a.title}', end="")
+            print(f'Searching the filesystem for asset: {a.title}\r', end="")
             asset = entity.asset(a.reference)
             if FILE_DATES_SCHEMA_NS not in asset.metadata_namespaces():
                 for root, dirs, files in os.walk(norm_path):
