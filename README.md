@@ -1,8 +1,7 @@
 # pyPreservicaFSDate
 
-Python module which queries a local file system to try and file system dates (created, modified, accessed) 
+Python module which queries a local file system to try and add file system dates (created, modified, accessed) 
 etc to objects in already in Preservica.
-
 
 ## Contributing
 
@@ -16,11 +15,9 @@ Bug reports can be raised directly on GitHub.
 
 Users of pyPreservicaFSDate should make sure they are licensed to use the Preservica REST APIs. 
 
-
 ## License
 
 The package is available as open source under the terms of the Apache License 2.0
-
 
 ## Installation
 
@@ -32,3 +29,44 @@ To install pyPreservicaFSDate, simply run this simple command in your terminal o
 
 
     $ pip install pyPreservicaFSDate
+
+
+
+## Usage
+
+To run the module you need to specify a Preservica collection you wish to process and a local directory
+containing the original files:
+
+
+    $ python -m pyPreservicaFSDate -c a7ad52e3-2cb3-4cb5-af2a-3ab08829a2a8 -p c://my-directory/images
+
+By default, the module will try and match Preservica assets to local file names by using the Asset title, this is 
+the fastest way of processing the dates, but may not correctly match files to assets.
+
+The alternative to to match using fixity values stored in Preservica, this can be turned on by using the -f flag:
+
+    $ python -m pyPreservicaFSDate -c a7ad52e3-2cb3-4cb5-af2a-3ab08829a2a8 -p c://my-directory/images -f
+
+Matching using fixity will be slower than using Asset titles.
+
+```
+usage: pyPreservicaFSDate [-h] [-c COLLECTION] [-p PATH] [-f]
+
+Add file system dates to Preservica assets Search local file system for
+matching files and add the file system dates to Preservica. Files are either
+matched on Asset title and filename or by fixity which is slower You provide
+both a Preservica collection UUID and a local file system folder to look for
+matches
+
+options:
+  -h, --help            show this help message and exit
+  -c, --collection COLLECTION
+                        The Preservica parent collection uuid
+  -p, --path PATH       The file system path to search
+  -f, --fixity          Use fixity matching (slow)
+
+```
+
+The dates will appear as a new metadata form within the Asset
+
+![Metadata Dates](dates.png)

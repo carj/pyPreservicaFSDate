@@ -22,7 +22,7 @@ if sys.argv[-1] == 'publish':
 setup(
     name=PKG,
     version="0.0.1",
-    description="Python module to add file system dates to existing Preservica assets",
+    description="Python module to add local file system dates to existing Preservica assets",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/carj/pyPreservicaFSDate",
