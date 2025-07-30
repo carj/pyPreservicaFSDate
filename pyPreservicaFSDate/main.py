@@ -1,3 +1,13 @@
+"""
+pyPreservicaFSDate module definition
+
+A python module for adding dates from a file system onto Preservica assets
+
+author:     James Carr
+licence:    Apache License 2.0
+
+"""
+
 import argparse
 import datetime
 import os.path
@@ -72,6 +82,9 @@ def group_metadata(metadata: MetadataGroupsAPI):
 
 
 def fixity(asset: Asset, entity: EntityAPI):
+    """
+    Find the fixity value and algorithm from the Preservica Asset
+    """
     for bs in entity.bitstreams_for_asset(asset):
         for f in bs.fixity:
             return f, bs.fixity[f]
@@ -79,7 +92,9 @@ def fixity(asset: Asset, entity: EntityAPI):
 
 
 def add_dates(asset: Asset, entity: EntityAPI, full_path):
-
+    """
+    Add the dates into Preservica
+    """
     stat = os.lstat(full_path)
     mtime = datetime.datetime.fromtimestamp(stat.st_mtime).date()
     ctime = datetime.datetime.fromtimestamp(stat.st_ctime).date()
@@ -92,13 +107,14 @@ def add_dates(asset: Asset, entity: EntityAPI, full_path):
 def main():
     """
 
-
+    For each asset in a collection search a local file system folder for the file
+    and if found add the filesystem dates into Preservica.
 
     :return:
     """
 
     cmd_parser = argparse.ArgumentParser(
-        prog='pyPreservicaFS',
+        prog='pyPreservicaFSDate',
         description=PROG_HELP,
         epilog='')
 
@@ -122,12 +138,14 @@ def main():
     collection = cmd_line['collection']
     if collection is None:
         folder = None
+        print(f"WARNING: No collection specified, all Preservica collections will be checked")
     else:
         folder = entity.folder(collection)
 
     fs_path = cmd_line['path']
     if fs_path is None:
         norm_path = os.getcwd()
+        print(f"WARNING: No local folder specified, the local folder {norm_path} will be checked")
     else:
         if not os.path.isdir(fs_path):
             print(f"The specified path does not exist: {fs_path}")
@@ -141,43 +159,44 @@ def main():
     print(f"Searching for files within: {norm_path}")
 
     if use_fixity:
+        print(f"Using fixity to match Assets to files")
         fixity_hash["MD5"] = FileHash(hashlib.md5)
         fixity_hash["SHA1"] = FileHash(hashlib.sha1)
         fixity_hash["SHA256"] = FileHash(hashlib.sha256)
         fixity_hash["SHA512"] = FileHash(hashlib.sha512)
         for a in filter(only_assets, entity.all_descendants(folder)):
+            print(f'\rSearching the filesystem for asset: {a.title}', end="")
             asset = entity.asset(a.reference)
             if FILE_DATES_SCHEMA_NS not in asset.metadata_namespaces():
-                print(f"Asset {asset.title} does not have files system dates...")
                 algorithm, fixity_value = fixity(a, entity)
                 for root, dirs, files in os.walk(norm_path):
                     for file in files:
                         full_path = os.path.join(root, file)
                         file_fixity = fixity_hash[algorithm](full_path)
                         if str(fixity_value).lower() == str(file_fixity).lower():
-                            print(f"Found matching file with same fixity {file}")
+                            print(f"Found matching file with same fixity {file}, adding dates...")
                             add_dates(asset, entity, full_path)
             else:
-                print(f"Asset {asset.title} has files system dates, skipping...")
+                print(f"Asset {asset.title} has existing file system dates, skipping...")
 
 
     if use_fixity is None:
         for a in filter(only_assets, entity.all_descendants(folder)):
+            print(f'\rSearching the filesystem for asset: {a.title}', end="")
             asset = entity.asset(a.reference)
             if FILE_DATES_SCHEMA_NS not in asset.metadata_namespaces():
-                print(f"Asset {asset.title} does not have files system dates...")
                 for root, dirs, files in os.walk(norm_path):
                     for file in files:
                         if Path(str(os.path.basename(file))).stem == asset.title:
-                            print(f"Found matching file with name {file}")
+                            print(f"Found matching file with name {file}, adding dates...")
                             full_path = os.path.join(root, file)
                             add_dates(asset, entity, full_path)
             else:
-                print(f"Asset {asset.title} has files system dates, skipping...")
+                print(f"Asset {asset.title} has existing file system dates, skipping...")
 
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
 
 

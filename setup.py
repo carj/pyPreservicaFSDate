@@ -44,6 +44,7 @@ setup(
     keywords='Preservica API Preservation',
     install_requires=["pyPreservica"],
     project_urls={
+        'Documentation': 'https://github.com/carj/preserva-tweet',
         'Source': 'https://github.com/carj/pyPreservicaFSDate'
     }
 )
