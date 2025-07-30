@@ -9,7 +9,7 @@ HERE = pathlib.Path(__file__).parent
 # The text of the README file
 README = (HERE / "README.md").read_text()
 
-PKG = "pyPreservicaFS"
+PKG = "pyPreservicaFSDate"
 
 # 'setup.py publish' shortcut.
 if sys.argv[-1] == 'publish':
@@ -22,14 +22,14 @@ if sys.argv[-1] == 'publish':
 setup(
     name=PKG,
     version="0.0.1",
-    description="Python module to add file system dates to Preservica assets",
+    description="Python module to add file system dates to existing Preservica assets",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://pyPreservicaFS.readthedocs.io/",
+    url="https://github.com/carj/pyPreservicaFSDate",
     author="James Carr",
     author_email="drjamescarr@gmail.com",
     license="Apache License 2.0",
-    packages=["pyPreservica"],
+    packages=["pyPreservicaFSDate"],
     classifiers=[
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
@@ -44,7 +44,6 @@ setup(
     keywords='Preservica API Preservation',
     install_requires=["pyPreservica"],
     project_urls={
-        'Documentation': 'https://pyPreservicaFS.readthedocs.io',
-        'Source': 'https://github.com/carj/pyPreservicaFS'
+        'Source': 'https://github.com/carj/pyPreservicaFSDate'
     }
 )
