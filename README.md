@@ -38,6 +38,20 @@ pyPreservicaFSDate uses the pyPreservica python library for ingesting content. T
 can use the same authentication methods as pyPreservica for reading Preservica credentials. See: 
 https://pypreservica.readthedocs.io/en/latest/intro.html#authentication
 
+The most straightforward way is to use a properties file to hold the Preservica credentials.
+
+### Properties File
+
+Create a properties file called "credentials.properties" with the following property names
+and save to the working directory ::
+
+    [credentials]
+    username=test@test.com
+    password=123444
+    tenant=PREVIEW
+    server=preview.preservica.com
+
+
 
 To run the module you need to specify a Preservica collection you wish to process and a local directory
 containing the original files:
