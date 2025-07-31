@@ -26,9 +26,9 @@ xml_document = """
 """
 
 PROG_HELP = """
-Add file system dates to Preservica assets
+Add file system dates to Preservica assets.
 Search local file system for matching files and add the file system dates to Preservica.
-Files are either matched on Asset title and filename or by fixity which is slower
+Files are either matched on Asset title and filename or by fixity which is slower.
 
 You provide both a Preservica collection UUID and a local file system folder to look for matches
 """
